@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="css/pico.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>Marquee Basic Letter Finder</title>
+</head>
+
+<body>
+    <main class="container">
+        <h2>Marquee Basic Letter Finder</h2>
+
+        <label for="currentMessage">Current Message:</label>
+        <textarea id="currentMessage" name="currentMessage" rows="3" style="text-align: center"></textarea><br>
+        <label for="newMessage">New Message:</label>
+        <textarea id="newMessage" name="newMessage" rows="3" style="text-align: center"></textarea>
+
+        <div class="container">
+
+            <input type="checkbox" role="switch" name="centered" id="centered" checked="true"
+                onclick="changeCentered()" />
+            <label for="centered" id="centeredLabel">
+                Centered
+            </label>
+
+        </div>
+        <br>
+
+        <input type="button" value="Check" onclick="getResult()">
+
+        <label for="alphacheck">
+            <input type="checkbox" role="switch" name="alphacheck" id="alphacheck" checked="true"
+                onclick="checkVerify()" />
+            Show Alphabetized
+        </label>
+
+        <label for="lettersToKeep">Letters to Keep:</label>
+        <span name="lettersToKeep" id="lettersToKeep" style="font-weight:bold;"></span><br>
+        <label for="lettersToReturn">Letters to Return:</label>
+        <span name="lettersToReturn" id="lettersToReturn" style="font-weight:bold;"></span><br>
+        <label for="lettersToGet">Letters to Get:</label>
+        <span name="lettersToGet" id="lettersToGet" style="font-weight:bold;"></span>
+    </main>
+</body>
+
+<script type="text/javascript">
+    function getResult() {
+        let currentMessage = document.getElementById("currentMessage").value.replace(/\s/g, "").toUpperCase();
+        let newMessage = document.getElementById("newMessage").value.replace(/\s/g, "").toUpperCase();
+        let lettersToKeep = "";
+        let lettersToGet = "";
+
+        messageValidator(currentMessage, newMessage, true)
+
+
+        for (let i = 0; i < newMessage.length; i++) {
+            let currentChar = newMessage[i];
+            if (currentMessage.includes(currentChar)) {
+                let firstIndex = currentMessage.indexOf(currentChar);
+                currentMessage = currentMessage.slice(0, firstIndex) + currentMessage.slice(firstIndex + 1)
+
+                lettersToKeep = lettersToKeep + currentChar;
+            }
+            else {
+                lettersToGet = lettersToGet + currentChar;
+            }
+        }
+
+        if (document.getElementById("alphacheck").checked) {
+            document.getElementById("lettersToKeep").textContent = lettersToKeep.split('').sort().join('');
+            document.getElementById("lettersToReturn").textContent = currentMessage.split('').sort().join('');
+            document.getElementById("lettersToGet").textContent = lettersToGet.split('').sort().join('');
+        }
+        else {
+            document.getElementById("lettersToKeep").textContent = lettersToKeep;
+            document.getElementById("lettersToReturn").textContent = currentMessage;
+            document.getElementById("lettersToGet").textContent = lettersToGet;
+        }
+
+    }
+
+    function checkVerify() {
+        let currentMessage = document.getElementById("currentMessage").value.replace(/\s/g, "").toUpperCase();
+        let newMessage = document.getElementById("newMessage").value.replace(/\s/g, "").toUpperCase();
+
+        if (messageValidator(currentMessage, newMessage, false)) {
+            getResult();
+        }
+    }
+
+    function messageValidator(currentMessage, newMessage, showAlert) {
+        if (currentMessage == "") {
+            if (showAlert) {
+                alert("Current Message must be filled out");
+            }
+            return false;
+        }
+
+        if (newMessage == "") {
+            if (showAlert) {
+                alert("New Message must be filled out");
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    function changeCentered() {
+        if (document.getElementById("centered").checked) {
+            document.getElementById("currentMessage").style.textAlign = "center";
+            document.getElementById("newMessage").style.textAlign = "center";
+            document.getElementById("centeredLabel").innerHTML = "Centered";
+        }
+        else {
+            document.getElementById("currentMessage").style.textAlign = "left"
+            document.getElementById("newMessage").style.textAlign = "left"
+            document.getElementById("centeredLabel").innerHTML = "Left";
+        }
+    }
+
+    changeCentered()
+</script>
+
+</html>
