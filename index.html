@@ -18,9 +18,11 @@
         <h2>Marquee Basic Letter Finder</h2>
 
         <label for="currentMessage">Current Message:</label>
-        <textarea id="currentMessage" name="currentMessage" rows="3" style="text-align: center; background: linear-gradient(rgb(128, 128, 128), rgb(128, 128, 128)) no-repeat center/1px 100%;"></textarea><br>
+        <textarea id="currentMessage" name="currentMessage" rows="3"
+            style="text-align: center; background: linear-gradient(rgb(128, 128, 128), rgb(128, 128, 128)) no-repeat center/1px 100%;"></textarea><br>
         <label for="newMessage">New Message:</label>
-        <textarea id="newMessage" name="newMessage" rows="3" style="text-align: center; background: linear-gradient(rgb(128, 128, 128), rgb(128, 128, 128)) no-repeat center/1px 100%;"></textarea>
+        <textarea id="newMessage" name="newMessage" rows="3"
+            style="text-align: center; background: linear-gradient(rgb(128, 128, 128), rgb(128, 128, 128)) no-repeat center/1px 100%;"></textarea>
 
         <div class="container">
 
@@ -41,6 +43,11 @@
             Show Alphabetized
         </label>
 
+        <label for="swapio">
+            <input type="checkbox" role="switch" name="swapio" id="swapio" checked="true" onclick="checkVerify()" />
+            Swap 0 for O and 1 for I
+        </label>
+
         <label for="lettersToKeep">Letters to Keep:</label>
         <span name="lettersToKeep" id="lettersToKeep" style="font-weight:bold;"></span><br>
         <label for="lettersToReturn">Letters to Return:</label>
@@ -53,20 +60,19 @@
         <a href="/about">About</a>
         <br>
         <p>
-            Copyright (c) 2024 Daniel Van Noord 
+            Copyright (c) 2024 Daniel Van Noord
         </p>
     </footer>
 </body>
 
 <script type="text/javascript">
     function getResult() {
-        let currentMessage = document.getElementById("currentMessage").value.replace(/\s/g, "").toUpperCase();
-        let newMessage = document.getElementById("newMessage").value.replace(/\s/g, "").toUpperCase();
+        let currentMessage = swapIOStringIfChecked(document.getElementById("currentMessage").value.replace(/\s/g, "")).toUpperCase();
+        let newMessage = swapIOStringIfChecked(document.getElementById("newMessage").value.replace(/\s/g, "").toUpperCase());
         let lettersToKeep = "";
         let lettersToGet = "";
 
         messageValidator(currentMessage, newMessage, true)
-
 
         for (let i = 0; i < newMessage.length; i++) {
             let currentChar = newMessage[i];
@@ -92,6 +98,15 @@
             document.getElementById("lettersToGet").textContent = lettersToGet;
         }
 
+    }
+
+    function swapIOStringIfChecked(message) {
+        let swapio = document.getElementById("swapio").checked;
+        if (swapio) {
+            message = message.replace('0', 'O');
+            message = message.replace('1', 'I');
+        }
+        return message;
     }
 
     function checkVerify() {
