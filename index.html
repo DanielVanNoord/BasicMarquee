@@ -70,23 +70,24 @@
         <h2>Marquee Basic Letter Finder</h2>
 
         <label for="currentMessage">Current Message:</label>
+
         <textarea id="currentMessage" name="currentMessage" rows="3"
             style="text-align: center; background: linear-gradient(rgb(128, 128, 128), rgb(128, 128, 128)) no-repeat center/1px 100%;"></textarea>
         <div role="group">
-            <input type="button" value="Share as New" onclick="generateCurrentAsNew(this)">
-            <input type="button" value="Share as Current" onclick="generateCurrentAsCurrent(this)">
-            <input type="button" value="Share Both" onclick="generateBoth(this)">
+            <input type="button" value="Share as New" onclick="generateNewAsNew(this)">
+            <input type="button" value="Share as Current" onclick="generateNewAsCurrent(this)">
         </div>
 
         <label for="newMessage">New Message:</label>
         <textarea id="newMessage" name="newMessage" rows="3"
             style="text-align: center; background: linear-gradient(rgb(128, 128, 128), rgb(128, 128, 128)) no-repeat center/1px 100%;"></textarea>
+
         <div role="group">
-            <input type="button" value="Share as New" onclick="generateNewAsNew(this)">
-            <input type="button" value="Share as Current" onclick="generateNewAsCurrent(this)">
-            <input type="button" value="Share Both" onclick="generateBoth(this)">
+            <input type="button" value="Share as New" onclick="generateCurrentAsNew(this)">
+            <input type="button" value="Share as Current" onclick="generateCurrentAsCurrent(this)">
         </div>
 
+        <input type="button" value="Share Both" onclick="generateBoth(this)">
 
         <div class="container">
 
@@ -127,7 +128,8 @@
     <footer>
         <a href="/about">About</a>
         <p>
-            The share buttons will copy a link to your clipboard that you can save or share. No data for this function is stored server side.
+            The share buttons will copy a link to your clipboard that you can save or share. No data for this function
+            is stored server side.
         </p>
         <br>
         <p>
