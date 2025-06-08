@@ -103,8 +103,8 @@
     function swapIOStringIfChecked(message) {
         let swapio = document.getElementById("swapio").checked;
         if (swapio) {
-            message = message.replace('0', 'O');
-            message = message.replace('1', 'I');
+            message = message.replaceAll('0', 'O');
+            message = message.replaceAll('1', 'I');
         }
         return message;
     }
